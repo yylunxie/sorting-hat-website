@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Hat Quiz</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: #f4f4f9;
+      }
+      .container {
+        text-align: center;
+        max-width: 500px;
+        padding: 20px;
+        background: white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+      .question {
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 1rem;
+        background: #6200ea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #3700b3;
+      }
+      .result {
+        margin-top: 20px;
+        font-size: 1.5rem;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div id="quiz">
+        <div class="question" id="question">What is your favorite color?</div>
+        <div class="options" id="options">
+          <button onclick="selectOption('Red')">Red</button>
+          <button onclick="selectOption('Blue')">Blue</button>
+          <button onclick="selectOption('Green')">Green</button>
+          <button onclick="selectOption('Yellow')">Yellow</button>
+        </div>
+      </div>
+      <div id="result" class="result" style="display: none"></div>
+    </div>
+
+    <script>
+      const questions = [
+        {
+          question: "What is your favorite color?",
+          options: ["Red", "Blue", "Green", "Yellow"],
+        },
+        {
+          question: "What is your favorite animal?",
+          options: ["Lion", "Snake", "Eagle", "Badger"],
+        },
+        {
+          question: "What do you value most?",
+          options: ["Bravery", "Ambition", "Wisdom", "Loyalty"],
+        },
+      ];
+
+      let currentQuestion = 0;
+      let answers = [];
+
+      function selectOption(option) {
+        answers.push(option);
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          showResult();
+        }
+      }
+
+      function loadQuestion() {
+        const questionContainer = document.getElementById("question");
+        const optionsContainer = document.getElementById("options");
+
+        questionContainer.textContent = questions[currentQuestion].question;
+        optionsContainer.innerHTML = "";
+
+        questions[currentQuestion].options.forEach((option) => {
+          const button = document.createElement("button");
+          button.textContent = option;
+          button.onclick = () => selectOption(option);
+          optionsContainer.appendChild(button);
+        });
+      }
+
+      function showResult() {
+        const quizContainer = document.getElementById("quiz");
+        const resultContainer = document.getElementById("result");
+
+        quizContainer.style.display = "none";
+        resultContainer.style.display = "block";
+
+        // Example logic to determine result based on answers
+        const house = answers.includes("Bravery")
+          ? "Gryffindor"
+          : answers.includes("Ambition")
+          ? "Slytherin"
+          : answers.includes("Wisdom")
+          ? "Ravenclaw"
+          : "Hufflepuff";
+
+        resultContainer.textContent = `You belong to: ${house}!`;
+      }
+
+      // Load the first question on page load
+      loadQuestion();
+    </script>
+  </body>
+</html>
