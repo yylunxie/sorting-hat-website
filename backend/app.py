@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # 解決跨域問題
 
 app = Flask(__name__)
+CORS(app)  # 啟用跨域請求支援
 
-# Example questions and logic for determining the result
+# 測驗題目
 questions = [
     {
         "id": 1,
@@ -22,19 +24,18 @@ questions = [
 ]
 
 
+# 提供題目 API
 @app.route("/questions", methods=["GET"])
 def get_questions():
-    """Endpoint to retrieve all questions"""
     return jsonify(questions)
 
 
+# 接收答案並計算結果 API
 @app.route("/submit", methods=["POST"])
 def submit_answers():
-    """Endpoint to receive answers and calculate result"""
     data = request.json
     answers = data.get("answers", [])
-
-    # Simple logic to calculate the house based on answers
+    # 根據答案計算結果
     if "Bravery" in answers:
         house = "Gryffindor"
     elif "Ambition" in answers:
@@ -43,7 +44,6 @@ def submit_answers():
         house = "Ravenclaw"
     else:
         house = "Hufflepuff"
-
     return jsonify({"result": house})
 
 
