@@ -22,7 +22,7 @@
 
       // 從後端獲取問題
       async function fetchQuestions() {
-        const response = await fetch("http://127.0.0.1:5000/questions");
+        const response = await fetch("http://3.107.86.115:8080/questions");
         questions = await response.json();
         loadQuestion();
       }
@@ -57,7 +57,7 @@
 
       // 提交答案並顯示結果
       async function submitAnswers() {
-        const response = await fetch("http://127.0.0.1:5000/submit", {
+        const response = await fetch("http://3.107.86.115:8080/submit", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
