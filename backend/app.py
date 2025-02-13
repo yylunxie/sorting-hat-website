@@ -1,8 +1,22 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # 解決跨域問題
 
+FRONTEND_URL = "YOUR_FRONTEND_URL"
+
 app = Flask(__name__)
-CORS(app)  # 啟用跨域請求支援
+CORS(
+    app,
+    resources={r"/*": {"origins": FRONTEND_URL}},
+)  # 啟用跨域請求支援
+
+
+@app.after_request
+def add_cors_headers(response):
+    response.headers["Access-Control-Allow-Origin"] = FRONTEND_URL
+    response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
+    return response
+
 
 # 測驗題目
 questions = [
@@ -22,6 +36,11 @@ questions = [
         "options": ["Bravery", "Ambition", "Wisdom", "Loyalty"],
     },
 ]
+
+
+@app.route("/")
+def index():
+    return "Hello, World!"
 
 
 # 提供題目 API
