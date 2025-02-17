@@ -53,18 +53,23 @@ def get_questions():
 @app.route("/submit", methods=["POST"])
 def submit_answers():
     data = request.json
-    answers = data.get("answers", [])
-    # 根據答案計算結果
-    if "Bravery" in answers:
-        house = "Gryffindor"
-    elif "Ambition" in answers:
-        house = "Slytherin"
-    elif "Wisdom" in answers:
-        house = "Ravenclaw"
-    else:
-        house = "Hufflepuff"
+    selected_index = data.get("selectedIndex")  # 讀取前端傳來的最大值索引
+
+    print(f"🔹 Received selectedIndex: {selected_index}")  # 🔹 打印到 EC2 終端
+
+    # House 對應規則
+    house_map = {
+        0: "Gryffindor",
+        1: "Slytherin",
+        2: "Ravenclaw",
+        3: "Hufflepuff",
+    }
+
+    house = house_map.get(selected_index, "Unknown")  # 預設 Unknown 避免錯誤
+    print(f"Assigned house: {house}")  # 🏠 在 EC2 終端顯示結果
+
     return jsonify({"result": house})
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=8080, debug=True)
