@@ -67,7 +67,7 @@ async function submitAnswers() {
     document.getElementById("result").style.display = "flex";
 
     document.getElementById("house-name").textContent = result.name;
-    document.getElementById("house-name").textContent = result.name;
+    document.getElementById("house-title").textContent = result.name;
     document.getElementById("house-description").textContent =
       result.description;
 
