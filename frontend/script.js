@@ -1,10 +1,10 @@
-const API_URL = "YOUR_API_URL"; // Elastic IP
+const API_URL = "http://3.106.226.211:8080"; // Elastic IP
 
 let questions = [];
 let currentQuestion = 0;
-let answerCounts = [0, 0, 0, 0]; // 初始化計數陣列
+let answerCounts = [0, 0, 0, 0]; // Track the count for each house
 
-// 初始化，取得問題
+// Fetch questions from the backend
 async function fetchQuestions() {
   try {
     const response = await fetch(`${API_URL}/questions`);
@@ -15,7 +15,7 @@ async function fetchQuestions() {
   }
 }
 
-// 顯示問題
+// Load the current question and options
 function loadQuestion() {
   const questionContainer = document.getElementById("question");
   const optionsContainer = document.getElementById("options");
@@ -26,7 +26,7 @@ function loadQuestion() {
 
     questions[currentQuestion].options.forEach((option, index) => {
       const button = document.createElement("button");
-      button.textContent = option; // ✅ 只顯示選項，不顯示數字
+      button.textContent = option;
       button.onclick = () => selectOption(index);
       optionsContainer.appendChild(button);
     });
@@ -35,40 +35,94 @@ function loadQuestion() {
   }
 }
 
-// 處理用戶選擇
+// Handle user selection and move to the next question
 function selectOption(index) {
-  answerCounts[index]++; // 增加對應索引的計數
-  console.log("Current Answer Counts:", answerCounts); // 在 Console 顯示目前計數
+  answerCounts[index]++; // Increment the count for the selected option
+  console.log("Current Answer Counts:", answerCounts);
   currentQuestion++;
   loadQuestion();
 }
 
-// 找出最大值的索引
+// Find the index of the most selected option
 function findMaxIndex(arr) {
-  if (arr.length === 0) return 0; // 確保不會傳 `undefined`
   return arr.indexOf(Math.max(...arr));
 }
 
-// 提交答案並顯示結果
+// Submit answers and display the result
 async function submitAnswers() {
-  const maxIndex = findMaxIndex(answerCounts); // 找出計數最多的選項
-  console.log("Submitting selectedIndex:", maxIndex); // 確保 `selectedIndex` 正確
+  const maxIndex = findMaxIndex(answerCounts);
+  console.log("Submitting selectedIndex:", maxIndex);
 
   try {
     const response = await fetch(`${API_URL}/submit`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ selectedIndex: maxIndex }), // 只傳遞最大索引
+      body: JSON.stringify({ selectedIndex: maxIndex }),
     });
 
     const result = await response.json();
+    console.log(result.result);
+    // Hide quiz, show results
     document.getElementById("quiz").style.display = "none";
-    document.getElementById("result").style.display = "block";
-    document.getElementById("result").textContent = `You belong to: ${result.result}!`;
+    document.getElementById("result").style.display = "flex";
+
+    document.getElementById("house-name").textContent = result.name;
+    document.getElementById("house-name").textContent = result.name;
+    document.getElementById("house-description").textContent =
+      result.description;
+
+    // Change background color based on house
+    changeHouseTheme(result.name);
   } catch (error) {
     console.error("Failed to submit answers:", error);
   }
 }
 
-// 頁面載入時取得問題
-fetchQuestions();
+function changeHouseTheme(house) {
+  const body = document.body;
+
+  switch (house) {
+    case "Gryffindor":
+      body.style.backgroundColor = "#7F0909"; // Dark Red
+      break;
+    case "Hufflepuff":
+      body.style.backgroundColor = "#FFDB00"; // Yellow
+      break;
+    case "Ravenclaw":
+      body.style.backgroundColor = "#0E1A40"; // Dark Blue
+      break;
+    case "Slytherin":
+      body.style.backgroundColor = "#1A472A"; // Dark Green
+      break;
+    default:
+      body.style.backgroundColor = "#58378B"; // Default
+  }
+}
+// Restart quiz
+function restartQuiz() {
+  document.getElementById("result").style.display = "none";
+  document.getElementById("home").style.display = "flex";
+  document.body.style.backgroundColor = "#58378b";
+
+  // Reset state
+  currentQuestion = 0;
+  answerCounts = [0, 0, 0, 0];
+
+  console.log("Quiz restarted!");
+}
+
+// Page initialization
+document.addEventListener("DOMContentLoaded", () => {
+  fetchQuestions();
+
+  // Start quiz event
+  document.getElementById("start-button").addEventListener("click", () => {
+    document.getElementById("home").style.display = "none";
+    document.getElementById("quiz").style.display = "flex";
+  });
+
+  // Restart quiz event
+  document
+    .getElementById("restart-button")
+    .addEventListener("click", restartQuiz);
+});

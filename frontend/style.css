@@ -1,26 +1,127 @@
+html,
 body {
+  width: 100vw;
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #f8f9fa;
-  padding: 20px;
+  background-color: #58378b;
+  overflow-x: hidden;
+  padding-top: 80px;
 }
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background: white;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+h1,
+h2,
+p {
+  color: white;
+}
+
+.header {
+  background-color: #1b1027;
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+/* Home page start*/
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* height: calc(100vh - 80px); */
+}
+.hat-img {
+  width: 300px;
+  height: 300px;
+  aspect-ratio: 1/1;
+}
+
+#start-button {
+  width: 30%;
+  border-radius: 30px;
+  background: #ffb300;
+}
+#start-button:hover {
+  background-color: #b8860b;
+  transform: scale(1.05);
+}
+/* Home page END */
+
+/* Quiz Page Start */
+#quiz {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 70%;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+#options {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
 }
 button {
-  margin: 10px;
-  padding: 10px 20px;
-  background-color: #6200ea;
+  font-size: 30px;
   color: white;
+  width: 100%;
+  padding: 15px;
+  margin: 10px 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 20px;
+  transition: 0.3s;
+  background-color: #6200ea;
   cursor: pointer;
 }
 button:hover {
   background-color: #3700b3;
+  scale: 1.05;
+}
+
+/* Quiz Page END */
+/* Result Page START */
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 70%;
+  margin: auto;
+}
+
+.box {
+  padding: 20px;
+  flex: 1;
+  /* display: flex; */
+  /* flex-direction: column; */
+}
+#house-name {
+  font-family: MedievalSharp;
+  font-weight: 1500;
+}
+#house-image {
+  width: 80%;
+  border-radius: 30px;
+}
+#congrat {
+  color: rgba(255, 255, 255, 0.788);
+}
+
+#restart-button {
+  width: 50%;
+}
+
+#house-description {
+  font-family: "Crimson Text";
+  color: black;
+  background-color: rgba(255, 255, 255, 0.3);
+  padding: 20px 20px;
+  width: 100%;
+  border-radius: 10px;
+  line-height: 1.6;
+  text-align: justify;
 }

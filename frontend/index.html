@@ -8,12 +8,35 @@
     <script defer src="script.js"></script>
   </head>
   <body>
-    <div class="container">
-      <div id="quiz">
-        <div id="question">Loading...</div>
-        <div id="options"></div>
+    <div class="header">
+      <h1>Sorting Hat Quiz</h1>
+    </div>
+    <div id="home" style="display: flex">
+      <img src="img/sorting-hat.png" alt="sorting hat image" />
+      <button id="start-button">Start Quiz</button>
+    </div>
+    <div id="quiz" style="display: none">
+      <h1 id="question">Loading...</h1>
+      <div id="options">
+        <!-- <button class="option">A</button>
+        <button class="option">B</button>
+        <button class="option">C</button>
+        <button class="option">D</button> -->
       </div>
-      <div id="result" style="display: none"></div>
+    </div>
+    <div id="result" style="display: none">
+      <div class="container">
+        <div class="box">
+          <img id="house-image" src="img/badge.jpg" alt="House Badge" />
+          <p id="congrat">Congradulation, you are ...</p>
+          <h1 id="house-name">house name</h1>
+          <button id="restart-button">Retake Quiz</button>
+        </div>
+        <div class="box">
+          <h1 id="house-name">house name</h1>
+          <p id="house-description">house description</p>
+        </div>
+      </div>
     </div>
   </body>
 </html>
