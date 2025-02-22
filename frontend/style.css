@@ -3,9 +3,25 @@ body {
   width: 100vw;
   font-family: Arial, sans-serif;
   text-align: center;
-  background-color: #58378b;
+  background-size: cover;
+  background-position: center;
   overflow-x: hidden;
   padding-top: 80px;
+}
+.body-default {
+  background-color: #58378b;
+}
+.body-gryffindor {
+  background-color: #9c1203;
+}
+.body-hufflepuff {
+  background-color: #e3a000;
+}
+.body-ravenclaw {
+  background-color: #00175e;
+}
+.body-slytherin {
+  background-color: #043807;
 }
 h1,
 h2,
@@ -83,6 +99,10 @@ button:hover {
 
 /* Quiz Page END */
 /* Result Page START */
+#result {
+  width: 100%;
+  height: 100%;
+}
 .container {
   display: flex;
   flex-direction: row;

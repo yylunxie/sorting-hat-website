@@ -81,29 +81,30 @@ async function submitAnswers() {
 function changeHouseTheme(house) {
   const body = document.body;
 
-  switch (house) {
-    case "Gryffindor":
-      body.style.backgroundColor = "#7F0909"; // Dark Red
-      break;
-    case "Hufflepuff":
-      body.style.backgroundColor = "#FFDB00"; // Yellow
-      break;
-    case "Ravenclaw":
-      body.style.backgroundColor = "#0E1A40"; // Dark Blue
-      break;
-    case "Slytherin":
-      body.style.backgroundColor = "#1A472A"; // Dark Green
-      break;
-    default:
-      body.style.backgroundColor = "#58378B"; // Default
-  }
+  // 先移除舊的 body class
+  document.body.classList.remove(
+    "body-default",
+    "body-gryffindor",
+    "body-hufflepuff",
+    "body-ravenclaw",
+    "body-slytherin"
+  );
+
+  // 根據學院加上對應 class
+  document.body.classList.add(`body-${house.toLowerCase()}`);
 }
 // Restart quiz
 function restartQuiz() {
   document.getElementById("result").style.display = "none";
   document.getElementById("home").style.display = "flex";
-  document.body.style.backgroundColor = "#58378b";
-
+  // 切換回預設背景
+  document.body.classList.remove(
+    "body-gryffindor",
+    "body-hufflepuff",
+    "body-ravenclaw",
+    "body-slytherin"
+  );
+  document.body.classList.add("body-default");
   // Reset state
   currentQuestion = 0;
   answerCounts = [0, 0, 0, 0];
