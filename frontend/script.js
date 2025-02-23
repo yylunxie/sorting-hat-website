@@ -1,4 +1,4 @@
-const API_URL = "http://3.106.226.211:8080"; // Elastic IP
+const API_URL = "http://54.79.239.203:8080"; // Elastic IP
 
 let questions = [];
 let currentQuestion = 0;
