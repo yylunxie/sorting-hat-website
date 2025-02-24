@@ -7,13 +7,34 @@
     <link rel="stylesheet" href="style.css" />
     <script defer src="script.js"></script>
   </head>
-  <body>
-    <div class="container">
-      <div id="quiz">
-        <div id="question">Loading...</div>
-        <div id="options"></div>
+  <body class="body-default">
+    <div class="header">
+      <h1>Sorting Hat Quiz</h1>
+    </div>
+    <!-- Home Page -->
+    <div id="home" style="display: flex">
+      <img src="img/sorting-hat.png" alt="sorting hat image" />
+      <button id="start-button">Start Quiz</button>
+    </div>
+    <!-- Quiz Page -->
+    <div id="quiz" style="display: none">
+      <h1 id="question">Loading...</h1>
+      <div id="options"></div>
+    </div>
+    <!-- Result Page -->
+    <div id="result" style="display: none">
+      <div class="container">
+        <div class="box">
+          <img id="house-image" src="img/badge.jpg" alt="House Badge" />
+          <p id="congrat">Congradulation, you are ...</p>
+          <h1 id="house-name">house name</h1>
+          <button id="restart-button">Retake Quiz</button>
+        </div>
+        <div class="box">
+          <h1 id="house-title">Ravenclaw</h1>
+          <p id="house-description">house description</p>
+        </div>
       </div>
-      <div id="result" style="display: none"></div>
     </div>
   </body>
 </html>
