@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # 解決跨域問題
 
-FRONTEND_URL = "YOUR_FRONTEND_URL"
+FRONTEND_URL = "YOUR_FRONTEND_URL"  # Your S3 Static Website URL without the last '/'
 
 app = Flask(__name__)
 CORS(
@@ -64,12 +64,20 @@ def submit_answers():
         2: "Ravenclaw",
         3: "Hufflepuff",
     }
+    house_desc = {
+        0: "Gryffindor ajlkhsdfuawe",
+        1: "Slytherin ajhdfaiuwefaisdjfjahsdfawf",
+        2: "Ravenclaw, ajhwfka;owriefja;iowerjfa;piwerf",
+        3: "Hufflepuff aljkdhsfajhwefliujhSSLDjfhawef",
+    }
 
     house = house_map.get(selected_index, "Unknown")  # 預設 Unknown 避免錯誤
+    description = house_desc.get(selected_index, "Unknown")
     print(f"Assigned house: {house}")  # 🏠 在 EC2 終端顯示結果
 
-    return jsonify({"result": house})
-
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8080, debug=True)
+    return jsonify(
+        {
+            "name": house,
+            "description": description,
+        }
+    )
