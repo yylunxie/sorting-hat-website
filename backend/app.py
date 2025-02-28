@@ -2,7 +2,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # 解決跨域問題
 
-FRONTEND_URL = "YOUR_FRONTEND_URL"
+FRONTEND_URL = "http://sorting-hat-demo.s3-website-ap-southeast-2.amazonaws.com"
 app = Flask(__name__)
 CORS(
     app,
