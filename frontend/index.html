@@ -13,8 +13,24 @@
     </div>
     <!-- Home Page -->
     <div id="home" style="display: flex">
-      <img src="img/sorting-hat.png" alt="sorting hat image" />
-      <button id="start-button">Start Quiz</button>
+      <div id="home-image-set">
+        <img src="img/gryffindor.png" alt="Gryffindor" class="home-badge" />
+        <img src="img/slytherin.png" alt="Slytherin" class="home-badge" />
+        <img src="img/sorting-hat.png" alt="sorting hat image" id="home-hat" />
+        <img src="img/ravenclaw.png" alt="Ravenclaw" class="home-badge" />
+        <img src="img/hufflepuff.png" alt="Hufflepuff" class="home-badge" />
+      </div>
+      <p id="intro">
+        當貓頭鷹叼著信件飛來，你就知道，這一天終於到來了 — 你即將踏入傳說中的
+        霍格華茲魔法學院。<br />
+        抵達城堡後，你走進那座千年不變的巍峨大廳，頭頂上漂浮著無數燭火與星辰。<br />
+        你和新生們一起緊張地站在中央，等待那頂破舊卻滿載智慧的分類帽，決定你的歸屬。
+        <br />
+        現在，你的選擇，將決定你的歸屬。<br />
+        接下來，讓我們看看，當分類帽輕輕落在你的頭上，它會說出哪個學院的名字？
+        🏰✨
+      </p>
+      <button id="start-button">開始測驗</button>
     </div>
     <!-- Quiz Page -->
     <div id="quiz" style="display: none">
@@ -25,10 +41,19 @@
     <div id="result" style="display: none">
       <div class="container">
         <div class="box">
-          <img id="house-image" src="img/badge.jpg" alt="House Badge" />
-          <p id="congrat">Congradulation, you are ...</p>
-          <h1 id="house-name">house name</h1>
-          <button id="restart-button">Retake Quiz</button>
+          <img id="house-image" src="img/ravenclaw.png" alt="House Badge" />
+          <p id="congrat">
+            當最後一道問題的答案浮現在你腦海中，空氣彷彿凝固了一瞬<br />
+            燭火微微閃爍，你耳邊響起低沉而悠長的呢喃——<br />
+            「啊，我看見了……你屬於……」<br />
+            話音未落，禮堂瞬間響起熱烈的掌聲，你的學院已然決定！<br />
+            從今天起，這裡將是你的第二個家，無論是冒險、智慧、野心還是忠誠，
+            <br />
+            你都將在這片魔法世界中閃閃發光<br />
+            你會在學院交到摯友，學習強大的魔法，甚至可能創造屬於自己的傳奇故事<br />
+            現在，穿上你的學院長袍，加入你的夥伴吧！霍格華茲，歡迎你！🏰✨
+          </p>
+          <button id="restart-button">重新測驗</button>
         </div>
         <div class="box">
           <h1 id="house-title">Ravenclaw</h1>

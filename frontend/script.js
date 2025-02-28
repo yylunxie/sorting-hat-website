@@ -1,4 +1,4 @@
-const API_URL = "http://54.79.239.203:8080"; // Elastic IP
+const API_URL = "http://<YOUR_EC2_PUBLIC_IP>:8080"; // e.g. "http://11.22.33.44:8080"
 
 let questions = [];
 let currentQuestion = 0;
@@ -66,10 +66,8 @@ async function submitAnswers() {
     document.getElementById("quiz").style.display = "none";
     document.getElementById("result").style.display = "flex";
 
-    document.getElementById("house-name").textContent = result.name;
     document.getElementById("house-title").textContent = result.name;
-    document.getElementById("house-description").textContent =
-      result.description;
+    document.getElementById("house-description").innerHTML = result.description;
 
     // Change background color based on house
     changeHouseTheme(result.name);
@@ -80,6 +78,7 @@ async function submitAnswers() {
 
 function changeHouseTheme(house) {
   const body = document.body;
+  const resultImage = document.getElementById("house-image");
 
   // 先移除舊的 body class
   document.body.classList.remove(
@@ -90,8 +89,17 @@ function changeHouseTheme(house) {
     "body-slytherin"
   );
 
+  // Update image source based on result
+  const houseImages = {
+    gryffindor: "img/gryffindor.png",
+    slytherin: "img/slytherin.png",
+    ravenclaw: "img/ravenclaw.png",
+    hufflepuff: "img/hufflepuff.png",
+  };
+
   // 根據學院加上對應 class
-  document.body.classList.add(`body-${house.toLowerCase()}`);
+  body.classList.add(`body-${house.toLowerCase()}`);
+  resultImage.src = houseImages[house.toLowerCase()];
 }
 // Restart quiz
 function restartQuiz() {

@@ -2,31 +2,46 @@
 html,
 body {
   width: 100vw;
+  height: 100vh;
+  margin: 0;
   font-family: Arial, sans-serif;
   text-align: center;
   background-size: cover;
-  background-position: center;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow-x: hidden;
   padding-top: 80px;
 }
+/* img {
+  object-fit: cover;
+} */
 .body-default {
   background-color: #58378b;
+  background-image: url("img/bg.png");
 }
 .body-gryffindor {
   background-color: #9c1203;
+  background-image: url("img/result-bg.png");
 }
 .body-hufflepuff {
   background-color: #e3a000;
+  background-image: url("img/result-bg.png");
 }
 .body-ravenclaw {
   background-color: #00175e;
+  background-image: url("img/result-bg.png");
 }
 .body-slytherin {
   background-color: #043807;
+  background-image: url("img/result-bg.png");
 }
 h1,
 h2,
-p {
+h3,
+p,
+ul,
+li {
   color: white;
 }
 
@@ -43,13 +58,37 @@ p {
 #home {
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: center;
   /* height: calc(100vh - 80px); */
 }
-.hat-img {
-  width: 300px;
-  height: 300px;
+#home-image-set {
+  display: flex;
+  /* flex-direction: row; */
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+.home-badge {
+  width: 200px;
+  height: 200px;
+  border-radius: 30px;
+}
+#home-hat {
+  width: 400px;
+  margin-bottom: 0;
   aspect-ratio: 1/1;
+}
+
+#intro {
+  width: 70%;
+  font-size: 20px;
+  line-height: 40px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  background-color: rgba(28, 15, 39, 0.5);
 }
 
 #start-button {
@@ -99,6 +138,7 @@ button:hover {
 }
 
 /* Quiz Page END */
+
 /* Result Page START */
 #result {
   width: 100%;
@@ -120,11 +160,6 @@ button:hover {
   /* display: flex; */
   /* flex-direction: column; */
 }
-#house-name {
-  font-family: "MedievalSharp", sans-serif;
-  font-weight: 1500;
-  font-size: 50px;
-}
 
 #house-title {
   font-family: "MedievalSharp", sans-serif;
@@ -132,11 +167,18 @@ button:hover {
   font-size: 70px;
 }
 #house-image {
-  width: 80%;
+  width: 70%;
   border-radius: 30px;
 }
 #congrat {
   color: rgba(255, 255, 255, 0.788);
+  font-size: 18px;
+  line-height: 36px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 5px;
+  border-radius: 10px;
+  /* background-color: rgba(28, 15, 39, 0.5); */
 }
 
 #restart-button {
@@ -146,7 +188,7 @@ button:hover {
 #house-description {
   font-family: sans-serif;
   color: black;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(0, 0, 0, 0.167);
   padding: 20px 20px;
   width: 100%;
   border-radius: 10px;
