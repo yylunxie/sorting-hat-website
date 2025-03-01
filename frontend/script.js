@@ -1,4 +1,4 @@
-const API_URL = "http://3.107.195.35:8080"; // 你的 API 伺服器 URL
+const API_URL = "http://<YOUR_EC2_PUBLIC_IP>:8080"; // 你的 API 伺服器 URL
 
 let questions = [];
 let currentQuestion = 0;
@@ -6,7 +6,6 @@ let answerCounts = [0, 0, 0, 0]; // 記錄每個選項的次數
 let quizCompleted = false; // 防止重複提交答案
 
 // 載入題目資料
-// Fetch questions from the backend
 async function fetchQuestions() {
   try {
     const response = await fetch(`${API_URL}/questions`);
@@ -28,14 +27,7 @@ function loadQuestion() {
   const optionsContainer = document.getElementById("options");
 
   if (currentQuestion < questions.length) {
-    let questionText = questions[currentQuestion].question;
-
-    // **只有第一題手動加題號，後續題目不動**
-    if (currentQuestion === 0 && !/^\d+\.\s+/.test(questionText)) {
-      questionText = `1. ${questionText}`;
-    }
-
-    questionContainer.textContent = questionText; // 正確顯示題目
+    questionContainer.textContent = questions[currentQuestion].question; // **直接顯示問題文本**
     optionsContainer.innerHTML = "";
 
     questions[currentQuestion].options.forEach((option, index) => {
@@ -48,8 +40,6 @@ function loadQuestion() {
     submitAnswers();
   }
 }
-
-
 
 // 處理使用者選擇答案
 function selectOption(index) {

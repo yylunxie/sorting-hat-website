@@ -2,7 +2,7 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS  # 解決跨域問題
 
-FRONTEND_URL = "http://sorting-hat-demo.s3-website-ap-southeast-2.amazonaws.com"
+FRONTEND_URL = "YOUR_FRONTEND_URL"
 app = Flask(__name__)
 CORS(
     app,
@@ -22,7 +22,7 @@ def add_cors_headers(response):
 questions = [
     {
         "id": 1,
-        "question": "如果你可以選擇一種魔法物品，你會選哪一個？",
+        "question": "1. 如果你可以選擇一種魔法物品，你會選哪一個？",
         "options": ["A. 隱形斗篷", "B. 變形咒筆記", "C. 學者之鏡", "D. 忠誠護符"],
     },
     {
