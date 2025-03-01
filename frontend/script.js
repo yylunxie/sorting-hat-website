@@ -1,27 +1,33 @@
-const API_URL = "http://<YOUR_EC2_PUBLIC_IP>:8080"; // e.g. "http://11.22.33.44:8080"
+const API_URL = "http://<YOUR_EC2_PUBLIC_IP>:8080"; // 你的 API 伺服器 URL
 
 let questions = [];
 let currentQuestion = 0;
-let answerCounts = [0, 0, 0, 0]; // Track the count for each house
+let answerCounts = [0, 0, 0, 0]; // 記錄每個選項的次數
+let quizCompleted = false; // 防止重複提交答案
 
-// Fetch questions from the backend
+// 載入題目資料
 async function fetchQuestions() {
   try {
     const response = await fetch(`${API_URL}/questions`);
     questions = await response.json();
-    loadQuestion();
+
+    if (questions.length > 0) {
+      currentQuestion = 0; // 確保第一題從 0 開始
+      loadQuestion(); // 立即載入第一題
+    } else {
+      console.error("No questions received from the API.");
+    }
   } catch (error) {
     console.error("Failed to fetch questions:", error);
   }
 }
 
-// Load the current question and options
 function loadQuestion() {
   const questionContainer = document.getElementById("question");
   const optionsContainer = document.getElementById("options");
 
   if (currentQuestion < questions.length) {
-    questionContainer.textContent = questions[currentQuestion].question;
+    questionContainer.textContent = questions[currentQuestion].question; // **直接顯示問題文本**
     optionsContainer.innerHTML = "";
 
     questions[currentQuestion].options.forEach((option, index) => {
@@ -35,21 +41,31 @@ function loadQuestion() {
   }
 }
 
-// Handle user selection and move to the next question
+// 處理使用者選擇答案
 function selectOption(index) {
-  answerCounts[index]++; // Increment the count for the selected option
+  if (quizCompleted) return; // **如果已提交，不要再處理點擊**
+  
+  answerCounts[index]++; // 紀錄選擇次數
   console.log("Current Answer Counts:", answerCounts);
   currentQuestion++;
-  loadQuestion();
+
+  if (currentQuestion < questions.length) {
+    loadQuestion();
+  } else {
+    submitAnswers();
+  }
 }
 
-// Find the index of the most selected option
+// 找出最常被選擇的選項
 function findMaxIndex(arr) {
   return arr.indexOf(Math.max(...arr));
 }
 
-// Submit answers and display the result
+// 提交答案
 async function submitAnswers() {
+  if (quizCompleted) return; // **確保 submitAnswers 只執行一次**
+  quizCompleted = true; // **標記測驗已完成，防止重複提交**
+
   const maxIndex = findMaxIndex(answerCounts);
   console.log("Submitting selectedIndex:", maxIndex);
 
@@ -61,21 +77,23 @@ async function submitAnswers() {
     });
 
     const result = await response.json();
-    console.log(result.result);
-    // Hide quiz, show results
+    console.log("Quiz result:", result);
+
+    // 隱藏測驗頁面，顯示結果頁面
     document.getElementById("quiz").style.display = "none";
     document.getElementById("result").style.display = "flex";
 
     document.getElementById("house-title").textContent = result.name;
     document.getElementById("house-description").innerHTML = result.description;
 
-    // Change background color based on house
+    // 更改背景顏色
     changeHouseTheme(result.name);
   } catch (error) {
     console.error("Failed to submit answers:", error);
   }
 }
 
+// 更改背景主題
 function changeHouseTheme(house) {
   const body = document.body;
   const resultImage = document.getElementById("house-image");
@@ -89,22 +107,25 @@ function changeHouseTheme(house) {
     "body-slytherin"
   );
 
-  // Update image source based on result
+  // 設定圖片
   const houseImages = {
-    gryffindor: "img/gryffindor.png",
-    slytherin: "img/slytherin.png",
-    ravenclaw: "img/ravenclaw.png",
-    hufflepuff: "img/hufflepuff.png",
+    gryffindor: "img/Gryffindor.png",
+    slytherin: "img/Slytherin.png",
+    ravenclaw: "img/Ravenclaw.png",
+    hufflepuff: "img/Hufflepuff.png",
   };
 
-  // 根據學院加上對應 class
+  // 設定背景顏色
   body.classList.add(`body-${house.toLowerCase()}`);
   resultImage.src = houseImages[house.toLowerCase()];
 }
-// Restart quiz
+
+// 重新開始測驗，回到 Home 畫面
 function restartQuiz() {
-  document.getElementById("result").style.display = "none";
-  document.getElementById("home").style.display = "flex";
+  document.getElementById("result").style.display = "none"; // 隱藏結果頁面
+  document.getElementById("home").style.display = "flex"; // 顯示 Home 頁面
+  document.getElementById("quiz").style.display = "none"; // 確保測驗畫面隱藏
+
   // 切換回預設背景
   document.body.classList.remove(
     "body-gryffindor",
@@ -113,25 +134,26 @@ function restartQuiz() {
     "body-slytherin"
   );
   document.body.classList.add("body-default");
-  // Reset state
+
+  // 重設狀態
   currentQuestion = 0;
   answerCounts = [0, 0, 0, 0];
+  quizCompleted = false; // **確保下一輪測驗可以重新運作**
 
-  console.log("Quiz restarted!");
+  console.log("Quiz restarted! Back to Home.");
 }
 
-// Page initialization
+// 畫面載入後執行
 document.addEventListener("DOMContentLoaded", () => {
-  fetchQuestions();
+  fetchQuestions(); // 預先載入題目
 
-  // Start quiz event
+  // 開始測驗
   document.getElementById("start-button").addEventListener("click", () => {
-    document.getElementById("home").style.display = "none";
-    document.getElementById("quiz").style.display = "flex";
+    document.getElementById("home").style.display = "none"; // 隱藏 Home 畫面
+    document.getElementById("quiz").style.display = "flex"; // 顯示測驗畫面
+    loadQuestion(); // 載入第一題
   });
 
-  // Restart quiz event
-  document
-    .getElementById("restart-button")
-    .addEventListener("click", restartQuiz);
+  // 重新開始測驗
+  document.getElementById("restart-button").addEventListener("click", restartQuiz);
 });

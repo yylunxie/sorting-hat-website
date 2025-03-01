@@ -22,7 +22,7 @@ def add_cors_headers(response):
 questions = [
     {
         "id": 1,
-        "question": "如果你可以選擇一種魔法物品，你會選哪一個？",
+        "question": "1. 如果你可以選擇一種魔法物品，你會選哪一個？",
         "options": ["A. 隱形斗篷", "B. 變形咒筆記", "C. 學者之鏡", "D. 忠誠護符"],
     },
     {
