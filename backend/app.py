@@ -1,8 +1,10 @@
 import json
-from flask import Flask, request, jsonify
+import os
+
+from flask import Flask, jsonify, request
 from flask_cors import CORS  # 解決跨域問題
 
-FRONTEND_URL = "YOUR_FRONTEND_URL"
+FRONTEND_URL = os.getenv("FRONTEND_URL", "*")  
 app = Flask(__name__)
 CORS(
     app,
